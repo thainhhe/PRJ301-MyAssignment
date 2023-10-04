@@ -66,7 +66,21 @@ public class LogInPage extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        String gmail = request.getParameter("gmail");
+        String password = request.getParameter("password");
+        
+        if(gmail.equals("lecture123") && password.equals("lecture123")){
+            response.sendRedirect("/attendance");
+        }else if(gmail.equals("student123") && password.equals("student123")){
+            response.sendRedirect("/viewSchedule");
+        }
+        else{
+            request.setAttribute("error", "Invalid username or password");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+        }
+        
+        
+        
     }
 
     /** 
