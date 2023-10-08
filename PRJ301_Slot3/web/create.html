@@ -1,0 +1,127 @@
+
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script>
+            function addRow() {
+                var table = document.getElementById("students");
+
+                // Determine the next row index based on current number of rows
+                var rowIndex = table.rows.length;
+
+                // Create a new row
+                var row = table.insertRow(rowIndex);
+
+                // Insert cells and add the required input elements
+                row.insertCell(0).innerHTML = '<input type="text" name="id' + rowIndex + '"/>';
+                row.insertCell(1).innerHTML = '<input type="text" name="name' + rowIndex + '"/>';
+
+                row.insertCell(2).innerHTML = `
+        <input type="radio" name="gender${rowIndex}" value="male"/> Male
+        <input type="radio" name="gender${rowIndex}" value="female"/> Female
+    `;
+
+                row.insertCell(3).innerHTML = '<input type="date" name="dob' + rowIndex + '"/>';
+
+                row.insertCell(4).innerHTML = `
+        <select name="department${rowIndex}">
+            <option value="SE001">SE001</option>
+            <option value="SE002">SE002</option>
+            <option value="SE003">SE003</option>
+        </select>
+    `;
+            }
+            
+            function submitForm()
+            {
+                var myform = document.getElementById("enrollform");
+                var row_count = document.getElementById("row_count");
+                var table = document.getElementById("students");
+                row_count.value = table.rows.length - 1;
+                myform.submit();
+            }
+            
+        </script>
+    </head>
+    <body>
+        <form id="enrollform" action="enroll" method="post">
+            <div>
+                <label for="classId">Class ID:</label>
+                <input type="text" id="classId" name="classId" required>
+            </div>
+
+            <div>
+                <label for="className">Class Name:</label>
+                <input type="text" id="className" name="className" required>
+            </div>
+
+            <div>
+                <label for="startDate">Start Date:</label>
+                <input type="date" id="startDate" name="startDate" required>
+            </div>
+
+            <div>
+                <label for="allowRetake">Allow Retake:</label>
+                <input type="checkbox" id="allowRetake" name="allowRetake">
+            </div>
+            <table id="students" border="1px">
+                <tr>
+                    <td>Id</td>
+                    <td>Name</td>
+                    <td>Gender</td>
+                    <td>Dob</td>
+                    <td>Department</td>
+                </tr>
+                <tr>
+                    <td><input type="text" name="id1"/> </td>
+                    <td><input type="text" name="name1"/></td>
+                    <td>
+                        <input type="radio" name="gender1" value="male"/> Male
+                        <input type="radio" name="gender1" value="female"/> Female
+                    </td>
+                    <td><input type="date" name="dob1"/></td>
+                    <td>
+                        <select name="department1">
+                            <option value="SE001">SE001</option>
+                            <option value="SE002">SE002</option>
+                            <option value="SE003">SE003</option>
+                        </select>    
+                    </td>
+                </tr>
+                <tr>
+                    <td><input type="text" name="id2"/> </td>
+                    <td><input type="text" name="name2"/></td>
+                    <td>
+                        <input type="radio" name="gender2" value="male"/> Male
+                        <input type="radio" name="gender2" value="female"/> Female
+                    </td>
+                    <td><input type="date" name="dob2"/></td>
+                    <td>
+                        <select name="department2">
+                            <option value="SE001">SE001</option>
+                            <option value="SE002">SE002</option>
+                            <option value="SE003">SE003</option>
+                        </select>    
+                    </td>
+                </tr>
+
+            </table>
+            <input type="button" onclick="addRow();" value="Enroll New Student" />        
+            <input type="hidden" id="row_count" name="row_count" value=""/>
+            <br/>
+            <div>
+                <input type="button" value="Create Class" onclick="submitForm()">
+            </div>
+        </form>
+
+
+
+    </body>
+</html>
