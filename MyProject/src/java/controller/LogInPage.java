@@ -66,12 +66,12 @@ public class LogInPage extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String gmail = request.getParameter("gmail");
+        String username = request.getParameter("username");
         String password = request.getParameter("password");
         
-        if(gmail.equals("lecture123") && password.equals("lecture123")){
+        if(username.equals("lecture123") && password.equals("lecture123")){
             response.sendRedirect("/attendance");
-        }else if(gmail.equals("student123") && password.equals("student123")){
+        }else if(username.equals("student123") && password.equals("student123")){
             response.sendRedirect("/viewSchedule");
         }
         else{
@@ -79,7 +79,7 @@ public class LogInPage extends HttpServlet {
             request.getRequestDispatcher("login.jsp").forward(request, response);
         }
         
-        
+        request.getRequestDispatcher("login.jsp").forward(request, response);
         
     }
 

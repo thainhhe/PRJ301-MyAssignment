@@ -9,7 +9,7 @@ import java.sql.Date;
  *
  * @author Admin
  */
-public class Student {
+public class Student extends BaseEntity {
     private int id;
     private String name;
     private boolean gender;
@@ -64,4 +64,5 @@ public class Student {
     public void setDept(Department dept) {
         this.dept = dept;
     }
+    
 }

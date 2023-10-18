@@ -8,15 +8,15 @@ package entity;
  *
  * @author Admin
  */
-public class Department {
-    private String id;
+public class Department extends BaseEntity{
+    private int id;
     private String name;
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -29,4 +29,5 @@ public class Department {
     public void setName(String name) {
         this.name = name;
     }
+    
 }

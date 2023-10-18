@@ -18,8 +18,9 @@ import java.util.logging.Logger;
 /**
  *
  * @author Admin
+ * @param <T>
  */
-@WebServlet(name="DBContext", urlPatterns={"/DBContext"})
+
 public abstract class DBContext<T extends BaseEntity> {
    protected Connection connection;
    

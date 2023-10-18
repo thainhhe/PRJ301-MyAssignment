@@ -5,6 +5,7 @@
 
 package controller.rect;
 
+import dal.RectDBContext;
 import entity.Rect;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -34,27 +35,8 @@ public class ListController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        int num = Integer.parseInt(request.getParameter("num"));
-        ArrayList<Rect> rects = new ArrayList<>();
-        Random random = new Random();
-        for (int i = 0; i < num; i++) {
-            int w = random.nextInt(101) + 50;
-            int h = random.nextInt(101) + 50;
-            int x = random.nextInt(501 - w);
-            int y = random.nextInt(501 - h);
-            int r = random.nextInt(256);
-            int g = random.nextInt(256); 
-            int b = random.nextInt(256); 
-            Rect rect = new Rect();
-            rect.setX(x);
-            rect.setY(y);
-            rect.setW(w);
-            rect.setH(h);
-            rect.setR(r);
-            rect.setG(g);
-            rect.setB(b);
-            rects.add(rect);
-        }
+        RectDBContext db = new RectDBContext();
+        ArrayList<Rect> rects = db.list();
         request.setAttribute("rects", rects);
         request.getRequestDispatcher("../view/rect/list.jsp").forward(request, response);
         

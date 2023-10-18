@@ -4,6 +4,8 @@
  */
 package entity;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Admin
@@ -12,6 +14,16 @@ public class Account extends BaseEntity {
     private String username;
     private String password;
     private String displayname;
+    private ArrayList<Role> roles = new ArrayList<>();
+
+    public ArrayList<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(ArrayList<Role> roles) {
+        this.roles = roles;
+    }
+    
 
     public String getUsername() {
         return username;

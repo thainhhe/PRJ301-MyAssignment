@@ -10,14 +10,13 @@ import entity.Account;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
-/**
- *
- * @author Admin
- */
+
 public class LoginController extends HttpServlet {
    
     
@@ -33,7 +32,7 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-         request.getRequestDispatcher("view/authentication/login.jsp").forward(request, response);
+         request.getRequestDispatcher("/view/authentication/login.jsp").forward(request, response);
     } 
 
     /** 
@@ -55,12 +54,23 @@ public class LoginController extends HttpServlet {
         AccountDBContext db = new AccountDBContext();
         Account loggedUser = db.get(param);
         
-        if(loggedUser == null)
-        {
+        if (loggedUser == null) {
             response.getWriter().println("incorrect username or password");
-        }
-        else
-        {
+        } else {
+            String remember = request.getParameter("remember");
+            
+            HttpSession session = request.getSession();
+            session.setAttribute("account", loggedUser);
+            
+            if (remember != null) {
+                Cookie c_user = new Cookie("user", username);
+                Cookie c_pass = new Cookie("pass", password);
+                c_user.setMaxAge(3600 * 24);
+                c_pass.setMaxAge(3600 * 24);
+                response.addCookie(c_user);
+                response.addCookie(c_pass);
+            }
+
             response.getWriter().println("Hello " + loggedUser.getDisplayname());
         }
     }
