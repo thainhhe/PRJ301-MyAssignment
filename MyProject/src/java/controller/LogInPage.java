@@ -5,6 +5,8 @@
 
 package controller;
 
+import dal.InstructorDBContext;
+import entity.Instructor;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -53,7 +55,7 @@ public class LogInPage extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+       request.getRequestDispatcher("login.jsp").forward(request, response);
     } 
 
     /** 
@@ -68,18 +70,22 @@ public class LogInPage extends HttpServlet {
     throws ServletException, IOException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+        Instructor param = new Instructor();
+        param.setUsername(username);
+        param.setPassword(password);
         
-        if(username.equals("lecture123") && password.equals("lecture123")){
-            response.sendRedirect("/attendance");
-        }else if(username.equals("student123") && password.equals("student123")){
-            response.sendRedirect("/viewSchedule");
-        }
-        else{
-            request.setAttribute("error", "Invalid username or password");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
-        }
+        InstructorDBContext db = new InstructorDBContext();
+        Instructor loggedUser = db.get(param);
         
-        request.getRequestDispatcher("login.jsp").forward(request, response);
+        if(loggedUser == null)
+        {
+            response.getWriter().println("incorrect username or password");
+        }
+        else
+        {
+            //response.getWriter().println("Hello " + loggedUser.getInstructor_name());
+            request.getRequestDispatcher("Home.html").forward(request, response);
+        }
         
     }
 

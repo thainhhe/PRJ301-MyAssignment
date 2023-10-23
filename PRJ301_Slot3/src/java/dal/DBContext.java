@@ -27,7 +27,7 @@ public abstract class DBContext<T extends BaseEntity> {
    public DBContext()
    {
        try {
-           String url = "jdbc:sqlserver://LAPTOP-S76U273F\\SQLEXPRESS04:1433;databaseName=PRJ301_FALL2023_Morning";
+           String url = "jdbc:sqlserver://LAPTOP-S76U273F\\SQLEXPRESS04:1433;databaseName=FALL2023_Assignment";
            String user = "sa";
            String pass = "123";
            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
