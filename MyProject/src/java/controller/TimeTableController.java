@@ -5,20 +5,28 @@
 
 package controller;
 
-import dal.InstructorDBContext;
-import entity.Instructor;
+import dal.SessionDBContext;
+import dal.TimeSlotDBContext;
+import entity.Session;
+import entity.TimeSlot;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.sql.Date;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import util.DateTimeHelper;
 
 /**
  *
  * @author Admin
  */
-public class LogInPage extends HttpServlet {
+public class TimeTableController extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -29,19 +37,38 @@ public class LogInPage extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet LogInPage</title>");  
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet LogInPage at " + request.getContextPath () + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        int instructorid = Integer.parseInt(request.getParameter("id"));
+        String r_from = request.getParameter("from");
+        String r_to = request.getParameter("to");
+        ArrayList<Date> dates = new ArrayList<>();
+        
+        if(r_from == null)//this week
+        {
+            dates = DateTimeHelper.getCurrentWeekDates();
         }
+        else
+        {
+            try {
+                dates = DateTimeHelper.getSqlDatesInRange(r_from, r_to);
+            } catch (ParseException ex) {
+                Logger.getLogger(TimeTableController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+         TimeSlotDBContext timeDB = new TimeSlotDBContext();
+         ArrayList<TimeSlot> slots = timeDB.list();
+         
+         SessionDBContext sessDB = new SessionDBContext();
+        ArrayList<Session> sessions = sessDB.getSessions(instructorid, dates.get(0), dates.get(dates.size()-1));
+         
+         request.setAttribute("slots", slots);
+         request.setAttribute("dates", dates);
+         request.setAttribute("from", dates.get(0));
+         request.setAttribute("to", dates.get(dates.size()-1));
+         request.setAttribute("sessions", sessions);
+         
+         
+         request.getRequestDispatcher("timeTable.jsp").forward(request, response);
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -55,7 +82,7 @@ public class LogInPage extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-       request.getRequestDispatcher("login.jsp").forward(request, response);
+        processRequest(request, response);
     } 
 
     /** 
@@ -68,25 +95,7 @@ public class LogInPage extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        Instructor param = new Instructor();
-        param.setUsername(username);
-        param.setPassword(password);
-        
-        InstructorDBContext db = new InstructorDBContext();
-        Instructor loggedUser = db.get(param);
-        
-        if(loggedUser == null)
-        {
-            response.getWriter().println("incorrect username or password");
-        }
-        else
-        {
-            response.getWriter().println("Hello " + loggedUser.getInstructor_name());
-            request.getRequestDispatcher("Home.html").forward(request, response);
-        }
-        
+        processRequest(request, response);
     }
 
     /** 
