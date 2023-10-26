@@ -10,16 +10,17 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Time Table</title>
     </head>
     <body>
+        <h1>Time Table</h1>
         <form action="timeTable" method="GET">
             From <input type="date" name="from" value="${requestScope.from}"/> <br/>
             To <input type="date" name="to" value="${requestScope.to}"/>
             <input type="hidden" value="${param.id}" name="id"/>
             <input type="submit" value="View"/>
         </form>
-        <table border="">
+        <table border="1">
             <tr>
                 <td></td>
                 <c:forEach items="${requestScope.dates}" var="d">
