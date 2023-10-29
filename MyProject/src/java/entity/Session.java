@@ -22,6 +22,20 @@ public class Session extends BaseEntity{
     private Instructor instructor;
     private Subject subject;
 
+    public Session() {
+    }
+
+    public Session(int id, Date date, TimeSlot time, Group group, int index, Room room, Instructor instructor, Subject subject) {
+        this.id = id;
+        this.date = date;
+        this.time = time;
+        this.group = group;
+        this.index = index;
+        this.room = room;
+        this.instructor = instructor;
+        this.subject = subject;
+    }
+    
     public Subject getSubject() {
         return subject;
     }

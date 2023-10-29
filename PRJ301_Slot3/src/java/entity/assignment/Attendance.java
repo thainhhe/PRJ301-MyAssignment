@@ -18,44 +18,44 @@ public class Attendance extends BaseEntity {
     private String description;
     private Date datetime;
     
-    public int getId() {
-        return id;
+    public Session getSession() {
+        return session;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setSession(Session session) {
+        this.session = session;
     }
 
-    public String getName() {
-        return name;
+    public Student getStudent() {
+        return student;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setStudent(Student student) {
+        this.student = student;
     }
 
-    public ArrayList<Student> getStudents() {
-        return students;
+    public boolean isStatus() {
+        return status;
     }
 
-    public void setStudents(ArrayList<Student> students) {
-        this.students = students;
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
-    public Instructor getSupervisor() {
-        return supervisor;
+    public String getDescription() {
+        return description;
     }
 
-    public void setSupervisor(Instructor supervisor) {
-        this.supervisor = supervisor;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public Subject getSubject() {
-        return subject;
+    public Date getDatetime() {
+        return datetime;
     }
 
-    public void setSubject(Subject subject) {
-        this.subject = subject;
+    public void setDatetime(Date datetime) {
+        this.datetime = datetime;
     }
     
 }

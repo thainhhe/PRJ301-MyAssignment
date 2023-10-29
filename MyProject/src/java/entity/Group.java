@@ -18,6 +18,17 @@ public class Group extends BaseEntity {
     private Subject subject;
     private Semester semester;
 
+    public Group() {
+    }
+
+    public Group(int id, String name, Instructor supervisor, Subject subject, Semester semester) {
+        this.id = id;
+        this.name = name;
+        this.supervisor = supervisor;
+        this.subject = subject;
+        this.semester = semester;
+    }
+
     public int getId() {
         return id;
     }

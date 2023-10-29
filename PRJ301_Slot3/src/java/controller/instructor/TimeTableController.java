@@ -2,19 +2,19 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller;
 
-import dal.SessionDBContext;
-import dal.TimeSlotDBContext;
-import entity.Session;
-import entity.TimeSlot;
+package controller.instructor;
+
+import dal.assignment.SessionDBContext;
+import dal.assignment.TimeSlotDBContext;
+import entity.assignment.Session;
+import entity.assignment.TimeSlot;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.sql.Date;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -27,53 +27,53 @@ import util.DateTimeHelper;
  * @author Admin
  */
 public class TimeTableController extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
+   
+    /** 
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        int instructorid = (int) session.getAttribute("instructorId");
+    throws ServletException, IOException {
+        int instructorid = Integer.parseInt(request.getParameter("id"));
         String r_from = request.getParameter("from");
         String r_to = request.getParameter("to");
         ArrayList<Date> dates = new ArrayList<>();
-
-        if (r_from == null) {
+        
+        if(r_from == null)//this week
+        {
             dates = DateTimeHelper.getCurrentWeekDates();
-        } else {
+        }
+        else
+        {
             try {
                 dates = DateTimeHelper.getSqlDatesInRange(r_from, r_to);
             } catch (ParseException ex) {
                 Logger.getLogger(TimeTableController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-
-        TimeSlotDBContext timeDB = new TimeSlotDBContext();
-        ArrayList<TimeSlot> slots = timeDB.list();
-
-        SessionDBContext sessDB = new SessionDBContext();
-        ArrayList<Session> sessions = sessDB.getSessions(instructorid, dates.get(0), dates.get(dates.size() - 1));
-
-        request.setAttribute("slots", slots);
-        request.setAttribute("dates", dates);
-        request.setAttribute("from", dates.get(0));
-        request.setAttribute("to", dates.get(dates.size() - 1));
-        request.setAttribute("sessions", sessions);
-
-        request.getRequestDispatcher("timeTable.jsp").forward(request, response);
-    }
+        
+         TimeSlotDBContext timeDB = new TimeSlotDBContext();
+         ArrayList<TimeSlot> slots = timeDB.list();
+         
+         SessionDBContext sessDB = new SessionDBContext();
+        ArrayList<Session> sessions = sessDB.getSessions(instructorid, dates.get(0), dates.get(dates.size()-1));
+         
+         request.setAttribute("slots", slots);
+         request.setAttribute("dates", dates);
+         request.setAttribute("from", dates.get(0));
+         request.setAttribute("to", dates.get(dates.size()-1));
+         request.setAttribute("sessions", sessions);
+         
+         
+         request.getRequestDispatcher("../view/instructor/timetable.jsp").forward(request, response);
+        }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
+    /** 
      * Handles the HTTP <code>GET</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -81,13 +81,12 @@ public class TimeTableController extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         processRequest(request, response);
-    }
+    } 
 
-    /**
+    /** 
      * Handles the HTTP <code>POST</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -95,13 +94,12 @@ public class TimeTableController extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
+    /** 
      * Returns a short description of the servlet.
-     *
      * @return a String containing servlet description
      */
     @Override

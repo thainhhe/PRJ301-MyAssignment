@@ -15,6 +15,14 @@ public class TimeSlot extends BaseEntity{
     private String description;
     private ArrayList<Session> sessions = new ArrayList<>();
 
+    public TimeSlot() {
+    }
+
+    public TimeSlot(int id, String description) {
+        this.id = id;
+        this.description = description;
+    }
+
     public int getId() {
         return id;
     }

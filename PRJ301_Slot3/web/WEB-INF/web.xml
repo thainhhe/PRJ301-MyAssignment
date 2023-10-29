@@ -56,6 +56,10 @@
         <servlet-name>DeleteStudentController</servlet-name>
         <servlet-class>controller.student.DeleteController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>TimeTableController</servlet-name>
+        <servlet-class>controller.instructor.TimeTableController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>calcontroller</servlet-name>
         <url-pattern>/cal</url-pattern>
@@ -111,6 +115,10 @@
     <servlet-mapping>
         <servlet-name>DeleteStudentController</servlet-name>
         <url-pattern>/student/delete</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TimeTableController</servlet-name>
+        <url-pattern>/instructor/timetable</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -11,12 +11,23 @@ import java.util.ArrayList;
  * @author Admin
  */
 public class Instructor extends BaseEntity {
-    private int id;
+
+    private int instructorId;
     private String username;
     private String password;
     private String instructor_name;
     private ArrayList<Session> sessions = new ArrayList<>();
     private ArrayList<Group> groups = new ArrayList<>();
+
+    public Instructor() {
+    }
+
+    public Instructor(int instructorId, String username, String password, String instructor_name) {
+        this.instructorId = instructorId;
+        this.username = username;
+        this.password = password;
+        this.instructor_name = instructor_name;
+    }
 
     public String getUsername() {
         return username;
@@ -42,12 +53,12 @@ public class Instructor extends BaseEntity {
         this.instructor_name = instructor_name;
     }
 
-    public int getId() {
-        return id;
+    public int getInstructorId() {
+        return instructorId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setInstructorId(int instructorId) {
+        this.instructorId = instructorId;
     }
 
     public ArrayList<Session> getSessions() {
@@ -65,7 +76,5 @@ public class Instructor extends BaseEntity {
     public void setGroups(ArrayList<Group> groups) {
         this.groups = groups;
     }
-    
-    
-    
+
 }

@@ -15,6 +15,15 @@ public class Subject extends BaseEntity{
     private String name;
     private ArrayList<Group> groups = new ArrayList<>();
 
+    public Subject() {
+    }
+
+    public Subject(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+    
+
     public int getId() {
         return id;
     }

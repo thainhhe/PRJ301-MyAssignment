@@ -14,6 +14,14 @@ public class Semester extends BaseEntity {
     private int semester_id;
     private ArrayList<Group> groups = new ArrayList<>();
     private String semester_name;
+
+    public Semester() {
+    }
+
+    public Semester(int semester_id, String semester_name) {
+        this.semester_id = semester_id;
+        this.semester_name = semester_name;
+    }
     
     public int getSemester_id() {
         return semester_id;

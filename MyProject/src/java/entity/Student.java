@@ -15,6 +15,15 @@ public class Student extends BaseEntity{
     private String name;
     private ArrayList<Group> groups = new ArrayList<>();
 
+    public Student() {
+    }
+
+    public Student(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+    
+
     public int getId() {
         return id;
     }
