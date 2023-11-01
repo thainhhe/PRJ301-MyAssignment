@@ -85,7 +85,8 @@ public class LogInPage extends HttpServlet {
             response.getWriter().println("incorrect username or password");
         } else {
             HttpSession session = request.getSession();
-            session.setAttribute("instructorId", loggedUser.getInstructorId());
+            session.setAttribute("instructor_id", loggedUser.getInstructor_id());
+            request.setAttribute("instructor_id", loggedUser.getInstructor_id());
             request.getRequestDispatcher("Home.html").forward(request, response);
         }
 

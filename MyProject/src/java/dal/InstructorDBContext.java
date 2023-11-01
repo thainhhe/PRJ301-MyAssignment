@@ -41,7 +41,7 @@ public class InstructorDBContext extends DBContext<Instructor>  {
     @Override
     public Instructor get(Instructor entity) {
         try {
-            String sql = "SELECT username,instructor_name FROM Instructor\n"
+            String sql = "SELECT instructor_id,username,instructor_name FROM Instructor\n"
                     + "WHERE username = ? AND [password] = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, entity.getUsername());
@@ -50,6 +50,7 @@ public class InstructorDBContext extends DBContext<Instructor>  {
             if(rs.next())
             {
                 Instructor instructor = new Instructor();
+                instructor.setInstructor_id(rs.getInt("instructor_id"));
                 instructor.setUsername(rs.getString("username"));
                 instructor.setInstructor_name(rs.getString("instructor_name"));
                 return instructor;

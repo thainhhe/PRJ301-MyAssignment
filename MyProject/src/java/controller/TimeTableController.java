@@ -40,7 +40,7 @@ public class TimeTableController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        int instructorid = (int) session.getAttribute("instructorId");
+        int instructorid = (int) session.getAttribute("instructor_id");
         String r_from = request.getParameter("from");
         String r_to = request.getParameter("to");
         ArrayList<Date> dates = new ArrayList<>();

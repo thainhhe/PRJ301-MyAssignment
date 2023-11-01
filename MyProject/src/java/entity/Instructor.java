@@ -12,7 +12,7 @@ import java.util.ArrayList;
  */
 public class Instructor extends BaseEntity {
 
-    private int instructorId;
+    private int instructor_id;
     private String username;
     private String password;
     private String instructor_name;
@@ -23,7 +23,7 @@ public class Instructor extends BaseEntity {
     }
 
     public Instructor(int instructorId, String username, String password, String instructor_name) {
-        this.instructorId = instructorId;
+        this.instructor_id = instructorId;
         this.username = username;
         this.password = password;
         this.instructor_name = instructor_name;
@@ -53,12 +53,12 @@ public class Instructor extends BaseEntity {
         this.instructor_name = instructor_name;
     }
 
-    public int getInstructorId() {
-        return instructorId;
+    public int getInstructor_id() {
+        return instructor_id;
     }
 
-    public void setInstructorId(int instructorId) {
-        this.instructorId = instructorId;
+    public void setInstructor_id(int instructor_id) {
+        this.instructor_id = instructor_id;
     }
 
     public ArrayList<Session> getSessions() {
