@@ -4,10 +4,57 @@
  */
 package entity;
 
+import java.sql.Date;
+
 /**
  *
  * @author Admin
  */
-public class Attendance {
+public class Attendance extends BaseEntity {
+    private Session session;
+    private Student student;
+    private boolean status;
+    private String description;
+    private Date datetime;
+
+    public Session getSession() {
+        return session;
+    }
+
+    public void setSession(Session session) {
+        this.session = session;
+    }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Date getDatetime() {
+        return datetime;
+    }
+
+    public void setDatetime(Date datetime) {
+        this.datetime = datetime;
+    }
     
 }

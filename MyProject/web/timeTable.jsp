@@ -61,38 +61,38 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Time Table</title>
         <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
+            body {
+                font-family: Arial, sans-serif;
+            }
 
-        h1 {
-            text-align: center;
-        }
+            h1 {
+                text-align: center;
+            }
 
-        form {
-            text-align: center;
-            margin: 20px;
-        }
+            form {
+                text-align: center;
+                margin: 20px;
+            }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+            }
 
-        th, td {
-            padding: 10px;
-            text-align: center;
-        }
+            th, td {
+                padding: 10px;
+                text-align: center;
+            }
 
-        th {
-            background-color: #007BFF;
-            color: #fff;
-        }
+            th {
+                background-color: #007BFF;
+                color: #fff;
+            }
 
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-    </style>
+            tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+        </style>
     </head>
     <body>
         <h1>Time Table</h1>
@@ -135,17 +135,19 @@
                         for (Session ses : sessions) {
                             if (ses.getTime().getId() == s.getId() && ses.getDate().equals(d)) {
                 %>
-                <td><%= ses.getGroup().getName() + "-" + ses.getSubject().getName() + "-" + ses.getRoom().getRid() %></td>
+                <td><a href="attendance?id=<%= ses.getId() %>"> <%= ses.getGroup().getName() + "-" + ses.getSubject().getName() + "-" + ses.getRoom().getRid() %></a>
+            <c:if test="<%= ses.isIsAtt() %>">(attended)</c:if>
+            <c:if test="<%= !ses.isIsAtt() %>">(Not yet)</c:if></td>
                 <%
                             }
                         }
                     }
                 %>
-            </tr>
-            <%
-                }
-            }
-            %>
-        </table>
-    </body>
+    </tr>
+    <%
+        }
+    }
+    %>
+</table>
+</body>
 </html>

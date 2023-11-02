@@ -5,6 +5,7 @@
 package entity;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 
 
@@ -21,8 +22,26 @@ public class Session extends BaseEntity{
     private Room room;
     private Instructor instructor;
     private Subject subject;
+    private boolean isAtt;
+    private ArrayList<Attendance> atts= new ArrayList<>();
 
     public Session() {
+    }
+
+    public boolean isIsAtt() {
+        return isAtt;
+    }
+
+    public void setIsAtt(boolean isAtt) {
+        this.isAtt = isAtt;
+    }
+
+    public ArrayList<Attendance> getAtts() {
+        return atts;
+    }
+
+    public void setAtts(ArrayList<Attendance> atts) {
+        this.atts = atts;
     }
 
     public Session(int id, Date date, TimeSlot time, Group group, int index, Room room, Instructor instructor, Subject subject) {
