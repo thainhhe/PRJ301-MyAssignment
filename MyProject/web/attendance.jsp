@@ -72,14 +72,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <% 
-            Object ses = request.getAttribute("ses");
-            String groupName = (ses != null) ? ((Group)ses.getClass().getMethod("getGroup").invoke(ses)).getName() : "";
-            String subjectName = (ses != null) ? ((Subject)ses.getClass().getMethod("getSubject").invoke(ses)).getName() : "";
-            String roomRid = (ses != null) ? ((Room)ses.getClass().getMethod("getRoom").invoke(ses)).getRid() : "";
-            String timeDescription = (ses != null) ? ((TimeSlot)ses.getClass().getMethod("getTime").invoke(ses)).getDescription() : "";
-        %>
-        <%= groupName + "-" + subjectName + "-" + roomRid + "-" + timeDescription %>
+        <%= request.getAttribute("ses.group.name") + "-" + request.getAttribute("ses.subject.name") + "-" + request.getAttribute("ses.room.rid") + "-" + request.getAttribute("ses.time.description") %>
         <br/>
         <form action="attendance" method="POST">
             <table border="1px"> 
@@ -90,46 +83,84 @@
                     <td>Time</td>
                 </tr>
                 <% 
-        Object atts = request.getAttribute("atts");
-        if (atts != null && atts instanceof java.util.ArrayList) {
-            java.util.ArrayList attsList = (java.util.ArrayList) atts;
-            for (Object a : attsList) {
-                Object student = a.getClass().getMethod("getStudent").invoke(a);
-                String studentName = (student != null) ? (String) student.getClass().getMethod("getName").invoke(student) : "";
-                int studentId = (student != null) ? (int) student.getClass().getMethod("getId").invoke(student) : 0;
-                boolean status = (boolean) a.getClass().getMethod("isStatus").invoke(a);
-                String description = (String) a.getClass().getMethod("getDescription").invoke(a);
-                Object datetime = a.getClass().getMethod("getDatetime").invoke(a);
+                    ArrayList<Attendance> atts = (ArrayList<Attendance>) request.getAttribute("atts");
+                    if (atts != null && !atts.isEmpty()) {
+                        for (Attendance a : atts) {
                 %>
                 <tr>
-                    <td><%= studentName %>
-                        <input type="hidden" name="stuid" value="<%= studentId %>"/>
+                    <td><%= a.getStudent().getName() %>
+                        <input type="hidden" name="stuid" value="<%= a.getStudent().getId() %>"/>
                     </td>
                     <td>
-                        <input type="radio"
-                               <% if (!status) { %>
-                               checked="checked"
-                               <% } %>
-                               name="status<%= studentId %>" value="absent"/>absent
-                        <input type="radio"
-                               <% if (status) { %>
-                               checked="checked"
-                               <% } %>
-                               name="status<%= studentId %>" value="present"/>present
+                        <input type="radio" <%= !a.getStatus() ? "checked='checked'" : "" %> name="status<%= a.getStudent().getId() %>" value="absent"/>absent
+                        <input type="radio" <%= a.getStatus() ? "checked='checked'" : "" %> name="status<%= a.getStudent().getId() %>" value="present"/>present
                     </td>
                     <td>
-                        <input type="text" value="<%= description %>"
-                               name="description<%= studentId %>"/>
+                        <input type="text" value="<%= a.getDescription() %>" name="description<%= a.getStudent().getId() %>"/>
                     </td>
-                    <td><%= datetime %></td>
+                    <td><%= a.getDatetime() %></td>
                 </tr>
                 <%
                         }
                     }
                 %>
             </table>
-            <input type="hidden" value="<%= a.getClass().getMethod("getSession").invoke(a).getClass().getMethod("getId").invoke(a.getSession()) %>" name="sesid"/>
+            <input type="hidden" value="<%= request.getAttribute("ses.id") %>" name="sesid"/>
             <input type="submit" value="Save"/>
         </form>
     </body>
 </html>
+
+
+<%--
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>JSP Page</title>
+</head>
+<body>
+    ${requestScope.ses.group.name}-${requestScope.ses.subject.name}-${requestScope.ses.room.rid}
+    -${requestScope.ses.time.description}
+    <br/>
+    <form action="attendance" method="POST">
+        <table border="1px">
+            <tr>
+                <td>Student</td>
+                <td>Status</td>
+                <td>Description</td>
+                <td>Time</td>
+            </tr>
+            <c:forEach var="a" items="${requestScope.atts}">
+                <tr>
+                    <td>${a.student.name}
+                        <input type="hidden" name="stuid" value="${a.student.id}"/>
+                    </td>
+                    <td>
+                        <input type="radio"
+                            <c:if test="${!a.status}">
+                                checked="checked"
+                            </c:if>
+                            name="status${a.student.id}" value="absent"/>absent
+                        <input type="radio"
+                            <c:if test="${a.status}">
+                                checked="checked"
+                            </c:if>
+                            name="status${a.student.id}" value="present"/>present
+                    </td>
+                    <td>
+                        <input type="text" value="${a.description}"
+                            name="description${a.student.id}"/>
+                    </td>
+                    <td>${a.datetime}</td>
+                </tr>
+            </c:forEach>
+        </table>
+        <input type="hidden" value="${requestScope.ses.id}" name="sesid"/>
+        <input type="submit" value="Save"/>
+    </form>
+</body>
+</html>
+--%>
