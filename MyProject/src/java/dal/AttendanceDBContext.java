@@ -46,7 +46,6 @@ public class AttendanceDBContext extends DBContext<Attendance> {
                 att.setSession(session);
                 att.setStatus(rs.getBoolean("status"));
                 att.setDescription(rs.getString("description"));
-                //att.setDatetime(rs.getTimestamp("att_datetime"));
                 att.setDatetime(rs.getDate("att_datetime"));
 
                 atts.add(att);
