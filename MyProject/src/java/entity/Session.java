@@ -23,7 +23,7 @@ public class Session extends BaseEntity{
     private Instructor instructor;
     private Subject subject;
     private boolean isAtt;
-    private String semester;
+    private Semester semester;
     private ArrayList<Attendance> atts= new ArrayList<>();
 
     public Session() {
@@ -45,7 +45,7 @@ public class Session extends BaseEntity{
         this.atts = atts;
     }
 
-    public Session(int id, Date date, TimeSlot time, Group group, int index, Room room, Instructor instructor, Subject subject, boolean isAtt, String semester) {
+    public Session(int id, Date date, TimeSlot time, Group group, int index, Room room, Instructor instructor, Subject subject, boolean isAtt, Semester semester) {
         this.id = id;
         this.date = date;
         this.time = time;
@@ -58,16 +58,14 @@ public class Session extends BaseEntity{
         this.semester = semester;
     }
 
-    public String getSemester() {
+    public Semester getSemester() {
         return semester;
     }
 
-    public void setSemester(String semester) {
+    public void setSemester(Semester semester) {
         this.semester = semester;
     }
-
-    
-    
+   
     public Subject getSubject() {
         return subject;
     }

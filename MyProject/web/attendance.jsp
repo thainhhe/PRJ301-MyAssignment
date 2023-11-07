@@ -10,7 +10,7 @@
     </head>
     <body>
         ${requestScope.ses.group.name}-${requestScope.ses.subject.name}-${requestScope.ses.room.rid}
-        -${requestScope.ses.time.description}
+        -${requestScope.ses.time.description}-${requestScope.ses.semester.semester_name}
         <br/>
         <form action="attendance" method="POST">
             <table border="1px"> 

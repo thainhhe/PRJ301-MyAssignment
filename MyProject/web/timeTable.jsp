@@ -33,9 +33,9 @@
                         <td>
                             <c:forEach items="${requestScope.sessions}" var="ses">
                                 <c:if test="${ses.time.id eq s.id and ses.date eq d}">
-                                    <a href="attendance?id=${ses.id}"> ${ses.group.name}-${ses.subject.name}-${ses.room.rid}</a>
-                                    <c:if test="${ses.isAtt}">(attended)</c:if>
-                                    <c:if test="${!ses.isAtt}">(Not yet)</c:if>
+                                    <a href="attendance?id=${ses.id}"> ${ses.group.name}-${ses.subject.name}-${ses.room.rid}-${ses.semester.semester_name}</a>
+                                    <c:if test="${ses.isAtt eq 'true'}">(attended)</c:if>
+                                    <c:if test="${ses.isAtt eq 'false'}">(Not yet)</c:if>
                                 </c:if>
                             </c:forEach>
                         </td>

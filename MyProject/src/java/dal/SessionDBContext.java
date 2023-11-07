@@ -74,8 +74,8 @@ public class SessionDBContext extends DBContext<Session> {
 
         return sessions;
     }
-    
-        public void addAttendances(Session ses) {
+
+    public void addAttendances(Session ses) {
         try {
             connection.setAutoCommit(false);
             String sql_update_isAtt = "UPDATE [Session] SET isAtt = 1 WHERE session_id =?";
@@ -149,15 +149,16 @@ public class SessionDBContext extends DBContext<Session> {
     @Override
     public Session get(Session entity) {
         try {
-            String sql = "SELECT s.session_id,s.date,r.room_id,t.timeslot_id,t.description,\n"
-                    + "                   g.group_id,g.group_name,su.subject_id,\n"
-                    + "                   su.subject_name,i.instructor_id,i.instructor_name,s.isAtt\n"
-                    + "                   FROM [Session] s INNER JOIN [Instructor] i ON i.instructor_id = s.instructor_id\n"
-                    + "                   INNER JOIN [Group] g ON g.group_id = s.group_id\n"
-                    + "                   INNER JOIN [TimeSlot] t ON s.timeslot_id = t.timeslot_id\n"
-                    + "                   INNER JOIN [Room] r ON r.room_id = s.room_id\n"
-                    + "                   INNER JOIN [Subject] su ON g.subject_id = su.subject_id\n"
-                    + " WHERE s.session_id = ?";
+            String sql = "SELECT Session.session_id, Session.date, Room.room_id, TimeSlot.timeslot_id, TimeSlot.description, [Group].group_id, [Group].group_name, Subject.subject_id, Subject.subject_name, Instructor.instructor_id, Instructor.instructor_name, \n"
+                    + "                  Semester.semester_name, Session.isAtt\n"
+                    + "FROM     Session INNER JOIN\n"
+                    + "                  Instructor ON Session.instructor_id = Instructor.instructor_id INNER JOIN\n"
+                    + "                  [Group] ON Session.group_id = [Group].group_id AND Instructor.instructor_id = [Group].instructor_id INNER JOIN\n"
+                    + "                  TimeSlot ON Session.timeslot_id = TimeSlot.timeslot_id INNER JOIN\n"
+                    + "                  Room ON Session.room_id = Room.room_id INNER JOIN\n"
+                    + "                  Subject ON [Group].subject_id = Subject.subject_id INNER JOIN\n"
+                    + "                  Semester ON Session.semester_id = Semester.semester_id\n"
+                    + "				  where session_id = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, entity.getId());
             ResultSet rs = stm.executeQuery();
@@ -177,10 +178,15 @@ public class SessionDBContext extends DBContext<Session> {
                 g.setId(rs.getInt("group_id"));
                 g.setName(rs.getString("group_name"));
                 session.setGroup(g);
+
                 Subject subject = new Subject();
                 subject.setId(rs.getInt("subject_id"));
                 subject.setName(rs.getString("subject_name"));
                 session.setSubject(subject);
+
+                Semester semester = new Semester();
+                semester.setSemester_name(rs.getString("semester_name"));
+                session.setSemester(semester);
                 return session;
             }
         } catch (SQLException ex) {
